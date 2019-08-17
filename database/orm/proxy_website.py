@@ -1,7 +1,7 @@
 
 import json
 from python_common.common import DateTimeEncoder
-from . import Base,Column,String,Integer,Text
+from . import Base,Column,String,Integer,Text,DateTime,Boolean
 
 class ProxyWebsite(Base):
     __tablename__ = "proxy_website"
@@ -10,6 +10,8 @@ class ProxyWebsite(Base):
     p_url = Column(Text)
     p_min= Column(Integer)
     p_max = Column(Integer)
+    p_lastcheck_time=Column(DateTime)
+    p_inuse=Column(Boolean)
     
 
     def to_json(self):
@@ -19,6 +21,8 @@ class ProxyWebsite(Base):
             'p_url': self.p_url,
             'p_min': self.p_min,
             'p_max': self.p_max,
+            'p_lastcheck_time': json.dumps(self.p_lastcheck_time, cls=DateTimeEncoder),
+            'p_inuse': self.p_inuse,
             
         }
         return json_string
@@ -36,4 +40,6 @@ class ProxyWebsite(Base):
             db_data.p_url = self.p_url
             db_data.p_min = self.p_min
             db_data.p_max = self.p_max
+            db_data.p_lastcheck_time=self.p_lastcheck_time
+            db_data.p_inuse=self.p_inuse
             

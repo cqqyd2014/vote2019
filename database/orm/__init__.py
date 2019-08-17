@@ -7,7 +7,6 @@ Base = declarative_base()
 
 
 
-from .system_code import SystemCode
-from .system_par import SystemPar
+from python_common.orm import SystemCode,SystemPar
 from .proxy_server import ProxyServer
 from .proxy_website import ProxyWebsite

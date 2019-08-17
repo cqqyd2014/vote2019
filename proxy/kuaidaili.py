@@ -2,12 +2,15 @@
 
 #base_url='https://www.kuaidaili.com/free/inha/%d/'
 
-from .base_proxy_page import  BaseProxyPage
+from database.orm import ProxyWebsite
+from database import _create_db_table,create_session
+from .base_proxy_site import  BaseProxySite
 
 
-class Kuaidaili(BaseProxyPage):
-    def __init__(self):
-        super().__init__('快代理','https://www.kuaidaili.com/free/inha/%d/',1,4)       
+class Kuaidaili(BaseProxySite):
+    
 
-    def getProxyListFromPage(self,page_url):
-        print(page_url)
+    def getProxyListFromPage(self,page_url,sel):
+        proxy_pages=self.getPages()
+        for page in proxy_pages:
+
