@@ -1,7 +1,7 @@
 
 
 from database import _create_db_table,create_session
-from database.orm import ProxyWebsite
+from database.orm import ProxyWebsite,SystemPar
 from .kuaidaili import Kuaidaili
 from python_common.selenium_common import Sel
 
@@ -9,10 +9,11 @@ from python_common.selenium_common import Sel
 
 if __name__ == "__main__":
     db_session=None
-    sel=Sel()
+    sel=None
     try:
 
         db_session=create_session()
+        sel=Sel('Chrome',db_session,SystemPar)
         #循环读取代理服务器发布页面
         sites=db_session.query(ProxyWebsite).filter(ProxyWebsite.p_inuse==True).all()
         for site in sites:
@@ -22,8 +23,8 @@ if __name__ == "__main__":
             site_max=site.p_max
             if site_name=='爱快网':
                 kuaidaili=Kuaidaili(site_name,site_url,site_min,site_max)
-                proxy_list=kuaidaili.getProxyListFromPage()
-            elif site_name=='新浪网'
+                kuaidaili.getProxyListFromPage(sel)
+            elif site_name=='新浪网':
                 pass
             else:
                 pass
@@ -34,4 +35,4 @@ if __name__ == "__main__":
         raise
     finally:
         db_session.close()
-        closeWindow.closeWindow()
+        sel.closeWindow()

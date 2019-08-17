@@ -8,10 +8,12 @@ class BaseProxySite(metaclass=ABCMeta):
         self.min_num = min_num
         self.max_num= max_num
 
-    def getPages(self,sel):
+    def getPagesUrls(self):
+        urls=[]
         for page_index in range(self.min_num,self.max_num+1):
             page_url=self.url.replace('%d',str(page_index))
-            self.getProxyListFromPage(page_url,sel)
+            urls.append(page_url)
+        return urls
 
 
     @abstractmethod

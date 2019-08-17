@@ -10,7 +10,11 @@ from .base_proxy_site import  BaseProxySite
 class Kuaidaili(BaseProxySite):
     
 
-    def getProxyListFromPage(self,page_url,sel):
-        proxy_pages=self.getPages()
+    def getProxyListFromPage(self,sel):
+        proxy_pages=self.getPagesUrls()
         for page in proxy_pages:
-
+            print(page)
+            sel.handle_open_page(page,self.scrap_servers(sel))
+    
+    def scrap_servers(self,sel):
+        pass
