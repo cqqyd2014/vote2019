@@ -23,12 +23,12 @@ if __name__ == "__main__":
             site_min=site.p_min
             site_max=site.p_max
             proxySite=ProxySite(site_name,site_url,site_min,site_max)
-            if site_name=='快代理':
+            if site_name=="快代理":
                 kuaidaili=Kuaidaili('Chrome',db_session,SystemPar)
                 for url in proxySite.getPagesUrls():
                     kuaidaili.scrap_servers(url,db_session)
                 kuaidaili.closeWindow()
-            elif site_name=='新浪网':
+            elif site_name=="新浪网":
                 pass
             else:
                 pass
