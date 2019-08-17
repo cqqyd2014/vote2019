@@ -10,3 +10,4 @@ Base = declarative_base()
 from python_common.orm import SystemCode,SystemPar
 from .proxy_server import ProxyServer
 from .proxy_website import ProxyWebsite
+from .votelog  import VoteLog

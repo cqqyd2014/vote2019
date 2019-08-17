@@ -3,9 +3,11 @@ from selenium import webdriver
 import time
 import datetime
 
-from python_common.selenium_common import Sel
+from python_common.selenium_common import Sel,hand_browse_webpage_wait
 from database import _create_db_table,create_session
 from database.orm import ProxyServer,SystemPar
+
+from .xiaoxiaotong import Xiaoxiaotong
 
 if __name__ == "__main__":
     db_session=None
@@ -17,18 +19,17 @@ if __name__ == "__main__":
         chrome_driver=SystemPar.get_value(db_session,'chrome_driver')
         
         #循环读取代理服务器发布页面
-        servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP",ProxyServer.p_lastcheck_time!=None).all()
+        #print(len(servers))
         for server in servers:
             #测试是否可用
-            sel=Sel('Chrome',db_session,SystemPar,server.p_ip+':'+str(server.p_port))
-            net_test_dist=SystemPar.get_value(db_session,'net_test_dist')
-            net_test_dist_exists_text=SystemPar.get_value(db_session,'net_test_dist_exists_text')
+            xiaoxiaotong=Xiaoxiaotong('Chrome',db_session,SystemPar,server.p_ip+':'+str(server.p_port))
             
-            if (net_test_dist_exists_text in sel.getHtmlSource(net_test_dist)):
-                server.p_lastcheck_time=datetime.datetime.now()
-            else:
-                server.p_lastcheck_time=None
-            sel.closeWindow()
+            url="http://2019cybc.xiaoxiaotong.org/scratch/detail?workId=32873825&func=shared&from=timeline&isappinstalled=0"
+
+            xiaoxiaotong.web_click(url,db_session,server.p_ip,server.p_port)
+            
+            xiaoxiaotong.closeWindow()
 
         db_session.commit()
     except:
