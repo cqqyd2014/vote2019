@@ -24,7 +24,7 @@ if __name__ == "__main__":
             site_max=site.p_max
             proxySite=ProxySite(site_name,site_url,site_min,site_max)
             if site_name=="快代理":
-                kuaidaili=Kuaidaili('Chrome',db_session,SystemPar)
+                kuaidaili=Kuaidaili('Chrome',db_session,SystemPar,None)
                 for url in proxySite.getPagesUrls():
                     kuaidaili.scrap_servers(url,db_session)
                 kuaidaili.closeWindow()
