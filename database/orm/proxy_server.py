@@ -9,6 +9,8 @@ class ProxyServer(Base):
     p_ip = Column(String(256), primary_key=True)
     p_port = Column(Integer, primary_key=True)
     p_type= Column(String(64))
+    p_location= Column(String(256))
+    p_speed=Column(Integer)
     p_from_page = Column(Text)
     p_add_time=Column(DateTime)
     p_lastcheck_time=Column(DateTime)
@@ -20,6 +22,8 @@ class ProxyServer(Base):
             'p_ip': self.p_ip,
             'p_port': self.p_port,
             'p_type': self.p_type,
+            'p_location': self.p_location,
+            'p_speed': self.p_speed,
             'p_from_page': self.p_from_page,
             'p_from_website_name': self.p_from_website_name,
             'p_add_time': json.dumps(self.p_add_time, cls=DateTimeEncoder),
@@ -43,3 +47,5 @@ class ProxyServer(Base):
             db_data.p_from_page = self.p_from_page
             db_data.p_add_time = self.p_add_time
             db_data.p_lastcheck_time = self.p_lastcheck_time
+            db_data.p_location = self.p_location
+            db_data.p_speed = self.p_speed

@@ -1,6 +1,6 @@
-from abc import ABCMeta,abstractmethod
 
-class BaseProxySite(metaclass=ABCMeta):
+
+class ProxySite():
 
     def __init__(self, name,url, min_num, max_num):
         self.name = name  
@@ -12,11 +12,9 @@ class BaseProxySite(metaclass=ABCMeta):
         urls=[]
         for page_index in range(self.min_num,self.max_num+1):
             page_url=self.url.replace('%d',str(page_index))
+            
             urls.append(page_url)
         return urls
 
 
-    @abstractmethod
-    def getProxyListFromPage(self,page_url,sel):
-        pass
         
