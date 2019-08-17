@@ -1,7 +1,7 @@
 #https://www.kuaidaili.com
 
 #base_url='https://www.kuaidaili.com/free/inha/%d/'
-
+import datetime
 from selenium.webdriver.common.by import By
 
 from database.orm import ProxyWebsite,ProxyServer
@@ -33,7 +33,7 @@ class Kuaidaili(Sel):
                 _type=table_rows[flag].find_element_by_xpath('./td[4]').text
                 location=table_rows[flag].find_element_by_xpath('./td[5]').text
                 speed=dc.text_to_int(table_rows[flag].find_element_by_xpath('./td[6]').text)
-                proxyServer=ProxyServer(p_ip=ip,p_port=port,p_type=_type,p_location=location,p_speed=speed,p_from_page=url,p_from_website_name="快代理")
+                proxyServer=ProxyServer(p_add_time=datetime.datetime.now(),p_ip=ip,p_port=port,p_type=_type,p_location=location,p_speed=speed,p_from_page=url,p_from_website_name="快代理")
                 proxyServer.saveOfUpdate(db_session)
                 flag+=1
         
