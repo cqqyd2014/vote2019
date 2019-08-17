@@ -1,7 +1,7 @@
 
 import json
 from python_common.common import DateTimeEncoder
-from . import Base,Column,String,Integer,Text,DateTime
+from . import Base,Column,String,Integer,Text,DateTime,Boolean
 
 class ProxyServer(Base):
     __tablename__ = "proxy_server"
@@ -15,6 +15,7 @@ class ProxyServer(Base):
     p_add_time=Column(DateTime)
     p_lastcheck_time=Column(DateTime)
     p_from_website_name=Column(String(64))
+    p_inuse=Column(Boolean)
 
     def to_json(self):
         json_string = {
