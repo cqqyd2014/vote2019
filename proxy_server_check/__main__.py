@@ -9,7 +9,7 @@ from database.orm import ProxyServer,SystemPar,CheckProxyLog
 
 if __name__ == "__main__":
     print("对代理服务器的测试有三种方式，1、测试所有代理服务器；2、测试，未知，状态的代理服务器；3、测试，可用，的代理服务器；4、测试，不可用，的代理服务器")
-    pring("请输入您的选择")
+    print("请输入您的选择")
     inputLine = input()
     
     db_session=None
