@@ -29,16 +29,9 @@ def init_db(db_session):
     systemPar = SystemPar(par_code='version',
                           par_desc='版本信息', par_value='1.0', par_type=2)
     db_session.add(systemPar)
-    
-    
-
-    
     systemPar = SystemPar(par_code='polling_second',
                           par_desc='Queue轮询间隔秒数', par_value='5', par_type=1)
     db_session.add(systemPar)
-
-    
-    
     proxyWebsite=ProxyWebsite(p_name='快代理',p_url='https://www.kuaidaili.com/free/inha/%d/',p_min=1,p_max=40,p_lastcheck_time=datetime.datetime.now(),p_inuse=True)
     db_session.add(proxyWebsite)
 
