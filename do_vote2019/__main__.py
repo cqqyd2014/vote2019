@@ -19,7 +19,7 @@ if __name__ == "__main__":
         chrome_driver=SystemPar.get_value(db_session,'chrome_driver')
         
         #循环读取代理服务器发布页面
-        servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP",ProxyServer.p_lastcheck_time!=None).all()
+        servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP",ProxyServer.p_lastcheck_status=="可用").all()
         #print(len(servers))
         for server in servers:
             #测试是否可用

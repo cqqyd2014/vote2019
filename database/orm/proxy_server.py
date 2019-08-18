@@ -14,6 +14,7 @@ class ProxyServer(Base):
     p_from_page = Column(Text)
     p_add_time=Column(DateTime)
     p_lastcheck_time=Column(DateTime)
+    p_lastcheck_status=Column(String(64))#可用#不可用#未知
     p_from_website_name=Column(String(64))
     p_inuse=Column(Boolean)
 
@@ -29,6 +30,8 @@ class ProxyServer(Base):
             'p_from_website_name': self.p_from_website_name,
             'p_add_time': json.dumps(self.p_add_time, cls=DateTimeEncoder),
             'p_lastcheck_time': json.dumps(self.p_lastcheck_time, cls=DateTimeEncoder),
+            'p_lastcheck_status': self.p_lastcheck_status,
+            
 
         }
         return json_string
@@ -50,3 +53,4 @@ class ProxyServer(Base):
             db_data.p_lastcheck_time = self.p_lastcheck_time
             db_data.p_location = self.p_location
             db_data.p_speed = self.p_speed
+            db_data.p_lastcheck_status=self.p_lastcheck_status

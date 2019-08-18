@@ -39,7 +39,7 @@ def init_db(db_session):
 
     
     
-    proxyWebsite=ProxyWebsite(p_name='快代理',p_url='https://www.kuaidaili.com/free/inha/%d/',p_min=1,p_max=2,p_lastcheck_time=datetime.datetime.now(),p_inuse=True)
+    proxyWebsite=ProxyWebsite(p_name='快代理',p_url='https://www.kuaidaili.com/free/inha/%d/',p_min=1,p_max=40,p_lastcheck_time=datetime.datetime.now(),p_inuse=True)
     db_session.add(proxyWebsite)
 
 

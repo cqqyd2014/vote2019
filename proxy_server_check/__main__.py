@@ -5,7 +5,7 @@ import datetime
 
 from python_common.selenium_common import Sel
 from database import _create_db_table,create_session
-from database.orm import ProxyServer,SystemPar
+from database.orm import ProxyServer,SystemPar,CheckProxyLog
 
 if __name__ == "__main__":
     db_session=None
@@ -23,11 +23,11 @@ if __name__ == "__main__":
             sel=Sel('Chrome',db_session,SystemPar,server.p_ip+':'+str(server.p_port))
             net_test_dist=SystemPar.get_value(db_session,'net_test_dist')
             net_test_dist_exists_text=SystemPar.get_value(db_session,'net_test_dist_exists_text')
-            
+            server.p_lastcheck_time=datetime.datetime.now()
             if (net_test_dist_exists_text in sel.getHtmlSource(net_test_dist)):
-                server.p_lastcheck_time=datetime.datetime.now()
+                server.p_lastcheck_status="可用"
             else:
-                server.p_lastcheck_time=None
+                server.p_lastcheck_status="不可用"
             sel.closeWindow()
 
         db_session.commit()
