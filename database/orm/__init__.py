@@ -11,3 +11,4 @@ from python_common.orm import SystemCode,SystemPar
 from .proxy_server import ProxyServer
 from .proxy_website import ProxyWebsite
 from .vote_log  import VoteLog
+from .check_proxy_log import CheckProxyLog

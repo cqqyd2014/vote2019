@@ -24,8 +24,14 @@ class Xiaoxiaotong(Sel):
             
             hand_browse_webpage_wait()
             hand_click(like_span)
-            voteLog=VoteLog(v_ip=ip,v_port=port,v_datetime=datetime.datetime.now())
+            voteLog=VoteLog(v_ip=ip,v_port=port,v_datetime=datetime.datetime.now(),v_status="成功")
             db_session.add(voteLog)
+            hand_browse_webpage_wait()
+        else:
+            voteLog=VoteLog(v_ip=ip,v_port=port,v_datetime=datetime.datetime.now(),v_status="失败")
+            db_session.add(voteLog)
+            hand_browse_webpage_wait()
+
             
             
         

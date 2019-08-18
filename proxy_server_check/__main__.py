@@ -8,6 +8,10 @@ from database import _create_db_table,create_session
 from database.orm import ProxyServer,SystemPar,CheckProxyLog
 
 if __name__ == "__main__":
+    print("对代理服务器的测试有三种方式，1、测试所有代理服务器；2、测试，未知，状态的代理服务器；3、测试，可用，的代理服务器；4、测试，不可用，的代理服务器")
+    pring("请输入您的选择")
+    inputLine = input()
+    
     db_session=None
     
     try:
@@ -15,9 +19,18 @@ if __name__ == "__main__":
         db_session=create_session()
         #db_chrome_driver=db_session.query(SystemPar).filter(SystemPar.par_code=='chrome_driver').one()
         chrome_driver=SystemPar.get_value(db_session,'chrome_driver')
-        
+        servers=None
         #循环读取代理服务器发布页面
-        servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        if inputLine=='1':
+            servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        elif inputLine=='2':
+            servers=db_session.query(ProxyServer).filter(ProxyServer.p_lastcheck_status=="未知",ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        elif inputLine=='3':
+            servers=db_session.query(ProxyServer).filter(ProxyServer.p_lastcheck_status=="可用",ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        elif inputLine=='4':
+            servers=db_session.query(ProxyServer).filter(ProxyServer.p_lastcheck_status=="不可用",ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        else:
+            servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
         for server in servers:
             #测试是否可用
             sel=Sel('Chrome',db_session,SystemPar,server.p_ip+':'+str(server.p_port))
