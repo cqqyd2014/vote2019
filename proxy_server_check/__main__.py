@@ -33,15 +33,23 @@ if __name__ == "__main__":
             servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
         for server in servers:
             #测试是否可用
-            sel=Sel('Chrome',db_session,SystemPar,server.p_ip+':'+str(server.p_port))
-            net_test_dist=SystemPar.get_value(db_session,'net_test_dist')
-            net_test_dist_exists_text=SystemPar.get_value(db_session,'net_test_dist_exists_text')
-            server.p_lastcheck_time=datetime.datetime.now()
-            if (net_test_dist_exists_text in sel.getHtmlSource(net_test_dist)):
-                server.p_lastcheck_status="可用"
-            else:
-                server.p_lastcheck_status="不可用"
-            sel.closeWindow()
+            db_check_session=create_session()
+            try:
+                sel=Sel('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
+                net_test_dist=SystemPar.get_value(db_session,'net_test_dist')
+                net_test_dist_exists_text=SystemPar.get_value(db_session,'net_test_dist_exists_text')
+                server.p_lastcheck_time=datetime.datetime.now()
+                if (net_test_dist_exists_text in sel.getHtmlSource(net_test_dist)):
+                    server.p_lastcheck_status="可用"
+                else:
+                    server.p_lastcheck_status="不可用"
+                sel.closeWindow()
+                db_check_session.commit()
+            except:
+                db_session.rollback()
+                raise
+            finally:
+                  db_check_session.close()
 
         db_session.commit()
     except:
