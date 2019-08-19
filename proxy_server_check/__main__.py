@@ -5,7 +5,7 @@ import datetime
 
 from python_common.selenium_common import Sel
 from database import _create_db_table,create_session
-from database.orm import ProxyServer,SystemPar,CheckProxyLog,ProxyCheck
+from database.orm import ProxyServer,SystemPar,CheckProxyLog
 from do_vote2019.xiaoxiaotong import Xiaoxiaotong
 
 if __name__ == "__main__":
