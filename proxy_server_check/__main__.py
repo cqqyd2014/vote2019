@@ -31,10 +31,14 @@ if __name__ == "__main__":
             servers=db_session.query(ProxyServer).filter(ProxyServer.p_lastcheck_status=="不可用",ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
         else:
             servers=db_session.query(ProxyServer).filter(ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+        flag=1
+        print('需要测试的代理服务器有'+str(len(servers))+'个')
         for server in servers:
             #测试是否可用
             db_check_session=create_session()
             try:
+
+                print('当前测试代理服务器'+str(flag)+':'+server.p_ip)
                 sel=Sel('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
                 net_test_dist=SystemPar.get_value(db_session,'net_test_dist')
                 net_test_dist_exists_text=SystemPar.get_value(db_session,'net_test_dist_exists_text')
