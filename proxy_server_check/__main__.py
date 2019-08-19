@@ -42,7 +42,7 @@ if __name__ == "__main__":
                 sel=Sel('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
                 net_test_dist=SystemPar.get_value(db_check_session,'net_test_dist')
                 net_test_dist_exists_text=SystemPar.get_value(db_check_session,'net_test_dist_exists_text')
-                server_check=db_check_session.query(ProxyServer).filter(ProxyServer.p_port==server.p_port,ProxyServer.p_ip==server.p_ip,ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").all()
+                server_check=db_check_session.query(ProxyServer).filter(ProxyServer.p_port==server.p_port,ProxyServer.p_ip==server.p_ip,ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").one()
                 server_check.p_lastcheck_time=datetime.datetime.now()
                 if (net_test_dist_exists_text in sel.getHtmlSource(net_test_dist)):
                     server_check.p_lastcheck_status="可用"
