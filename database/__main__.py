@@ -2,7 +2,7 @@
 #数据库初始化
 import datetime
 from .orm_session import create_session,_create_db_table
-from .orm import SystemPar,SystemCode,ProxyWebsite
+from .orm import SystemPar,SystemCode,ProxyWebsite,ProxyCheck
 import platform
 from python_common.selenium_common import init_database_system_par
 from python_common.database_common import base_system_code
@@ -34,6 +34,8 @@ def init_db(db_session):
     db_session.add(systemPar)
     proxyWebsite=ProxyWebsite(p_name='快代理',p_url='https://www.kuaidaili.com/free/inha/%d/',p_min=1,p_max=40,p_lastcheck_time=datetime.datetime.now(),p_inuse=True)
     db_session.add(proxyWebsite)
+
+
     db_session.commit()
     print('init db ok！')
 

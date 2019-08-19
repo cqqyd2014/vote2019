@@ -5,9 +5,11 @@ import datetime
 
 from python_common.selenium_common import Sel
 from database import _create_db_table,create_session
-from database.orm import ProxyServer,SystemPar,CheckProxyLog
+from database.orm import ProxyServer,SystemPar,CheckProxyLog,ProxyCheck
+from do_vote2019.xiaoxiaotong import Xiaoxiaotong
 
 if __name__ == "__main__":
+
     print("对代理服务器的测试有三种方式，1、测试所有代理服务器；2、测试，未知，状态的代理服务器；3、测试，可用，的代理服务器；4、测试，不可用，的代理服务器")
     print("请输入您的选择")
     inputLine = input()
@@ -39,18 +41,16 @@ if __name__ == "__main__":
             try:
 
                 print('当前测试代理服务器'+str(flag)+':'+server.p_ip)
-                sel=Sel('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
-                net_test_dist=SystemPar.get_value(db_check_session,'net_test_dist')
-                net_test_dist_exists_text=SystemPar.get_value(db_check_session,'net_test_dist_exists_text')
-                server_check=db_check_session.query(ProxyServer).filter(ProxyServer.p_port==server.p_port,ProxyServer.p_ip==server.p_ip,ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP").one()
-                server_check.p_lastcheck_time=datetime.datetime.now()
-                if (net_test_dist_exists_text in sel.getHtmlSource(net_test_dist)):
-                    server_check.p_lastcheck_status="可用"
-                else:
-                    server_check.p_lastcheck_status="不可用"
-                sel.closeWindow()
+                xiaoxiaotong=Xiaoxiaotong('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
+            
+                url="http://2019cybc.xiaoxiaotong.org/scratch/detail?workId=32873825&func=shared&from=timeline&isappinstalled=0"
+
+                xiaoxiaotong.web_check(url,db_session,server.p_ip,server.p_port)
+            
+                xiaoxiaotong.closeWindow()
                 db_check_session.commit()
             except:
+                print('出错')
                 db_session.rollback()
                 raise
             finally:
