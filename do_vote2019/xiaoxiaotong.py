@@ -25,11 +25,12 @@ class Xiaoxiaotong(Sel):
             checkProxyLog=CheckProxyLog(c_ip=ip,c_port=port,c_datetime=datetime.datetime.now(),c_status='可用')
             db_session.add(checkProxyLog)
             hand_browse_webpage_wait()
-            
+            return True
         else:
             checkProxyLog=CheckProxyLog(c_ip=ip,c_port=port,c_datetime=datetime.datetime.now(),c_status='不可用')
             db_session.add(checkProxyLog)
             hand_browse_webpage_wait()
+            return False
             
     
    

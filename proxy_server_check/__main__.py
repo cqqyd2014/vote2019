@@ -41,12 +41,17 @@ if __name__ == "__main__":
             try:
 
                 print('当前测试代理服务器'+str(flag)+':'+server.p_ip)
+                server_check=db_session.query(ProxyServer).filter(ProxyServer.p_ip==server.p_ip,ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP",ProxyServer.p_port==server.p_port).all()
+
                 xiaoxiaotong=Xiaoxiaotong('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
             
                 url="http://2019cybc.xiaoxiaotong.org/scratch/detail?workId=32873825&func=shared&from=timeline&isappinstalled=0"
 
-                xiaoxiaotong.web_check(url,db_session,server.p_ip,server.p_port)
-            
+                if xiaoxiaotong.web_check(url,db_session,server.p_ip,server.p_port):
+                    server_check.p_lastcheck_status='可用'
+                else:
+                    server_check.p_lastcheck_status='不可用'
+                server_check.p_lastcheck_time=datetime.datetime.now()
                 xiaoxiaotong.closeWindow()
                 db_check_session.commit()
             except:
