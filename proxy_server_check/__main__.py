@@ -41,7 +41,7 @@ if __name__ == "__main__":
             try:
 
                 print('当前测试代理服务器'+str(flag)+':'+server.p_ip)
-                server_check=db_session.query(ProxyServer).filter(ProxyServer.p_ip==server.p_ip,ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP",ProxyServer.p_port==server.p_port).all()
+                server_check=db_session.query(ProxyServer).filter(ProxyServer.p_ip==server.p_ip,ProxyServer.p_inuse==True,ProxyServer.p_type=="HTTP",ProxyServer.p_port==server.p_port).one()
 
                 xiaoxiaotong=Xiaoxiaotong('Chrome',db_check_session,SystemPar,server.p_ip+':'+str(server.p_port))
             
